@@ -17,17 +17,16 @@ public class Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("text/plain");
+		response.setContentType("text/html"); // MUY IMPORTANTE EL TIPO PARA QUE NOS COJA LAS ETIQUETAS QUE USEMOS
 	    PrintWriter out = response.getWriter();
 	    
 	    String title = "HTTP Header Request Example";
-	    String docType = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n";
-	    out.println(docType + "<html>\n" + "<head><title>" + title + "</title></head>\n"
-	    		+ "<body>\n<h1 aling=\"center\">" + title + "</h1>\n"
+	    out.println("<html>\n" + "<head><title>" + title + "</title></head>\n"
+	    		+ "<body>\n<h1 align=\"center\"> Method GetHeaderNames </h1>\n"
 	    		+ "<table width=\"100%\" border=\"1\" align=\"center\">\n"
 	    		+ "<tr>\n"
 	    		+ "<th>Header Name</th><th>Header Value</th>\n" + "</tr>\n");
-	    //out.println("Cabeceras de petición");
+	    
 	    // Metodo getHeaderNames
 	    // Objeto names guarda la lista de cabeceras
 	    Enumeration<String> names = request.getHeaderNames();
@@ -44,18 +43,19 @@ public class Servlet extends HttpServlet {
 	    			}
 	    		}
 	    	}
-	    out.println("</table>\n</body></html>");
-	    /* IMPORTANTE!!! NO ME COGE LAS ETIQUETAS HTML, PERO ESTÁN BIEN ESCRITAS -.-"!
-	     * PARA COMPROBAR: EJECUTA EL SERVLET COPIA EL CODIGO QUE SALE, PEGALO EN UN
-	     * DOCUMENTO HTML Y EJECUTALO EN EL NAVEGADOR, SALDRÁ EL RESULTADO COMO ESPERAMOS.
-	     */
-	    
+	    out.println("</table>\n");
+	    out.println("<h1 align=\"center\"> Method GetHeader </h1>\n"
+	    		+ "<table width=\"100%\" border=\"1\" align=\"center\">\n"
+	    		+ "<tr>\n"
+	    		+ "<th>Header Name</th><th>Header Value</th>\n" + "</tr>\n");   
+	    	    
 	    // Metodo getHeader
 	    // Seleccionamos una cabecera y guardamos su valor en la variable
 	    String acceptLanguage = request.getHeader("accept-language");
 	    String acceptCharset = request.getHeader("accept-charset");
 	    // Mostramos el valor de la cabecera seleccionada
-	    out.println("\nacceptLanguage: " + acceptLanguage);
-	    out.println("acceptCharset:" + acceptCharset);
+	    out.println("<tr><td>Accept-Language</td>\n<td>" + acceptLanguage + "</td></tr>\n");
+	    out.println("<tr><td>Accept-Charset</td>\n<td>" + acceptCharset + "</td></tr>\n");
+	    out.println("</table>\n</body>\n</html>");
 	    }
 	}
