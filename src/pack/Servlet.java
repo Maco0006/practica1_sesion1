@@ -23,16 +23,21 @@ public class Servlet extends HttpServlet {
 	    PrintWriter out = response.getWriter();
 
 	    out.println("Cabeceras de petición:");
+	    
+	    /*Objeto names guarda la lista de cabeceras*/
 	    Enumeration<String> names = request.getHeaderNames();
 	    while (names.hasMoreElements()) {
-	      String name = (String) names.nextElement();
-	      Enumeration<String> values = request.getHeaders(name); // support multiple values
-	      if (values != null) {
-	        while (values.hasMoreElements()) {
-	          String value = (String) values.nextElement();
-	          out.println(name + ": " + value);
-	        }
-	      }
+	    	/*Variable name guarda el nombre de cabecera*/
+	    	String name = (String) names.nextElement();
+	    	/*Objeto values guarda la lista de valores de las cabeceras*/
+	    	Enumeration<String> values = request.getHeaders(name); // Soporta múltiples valores
+	    	if (values != null) {
+	    		while (values.hasMoreElements()) {
+	    			/*Variable value contiene el valor de cada cabecera*/
+	    			String value = (String) values.nextElement();
+	    			out.println(name + ": " + value);
+	    			}
+	    		}
+	    	}
 	    }
 	}
-}
