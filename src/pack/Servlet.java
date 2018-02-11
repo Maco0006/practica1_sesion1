@@ -30,6 +30,8 @@ import javax.servlet.http.HttpServletResponse;
 public class Servlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
+	
+	static final String NEW_HOST = "http://www.ujaen.es";
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html"); // MUY IMPORTANTE EL TIPO PARA QUE NOS COJA LAS ETIQUETAS QUE USEMOS
@@ -85,6 +87,15 @@ public class Servlet extends HttpServlet {
 	    out.println("<tr><td>Authentication Type</td>\n<td>" + request.getAuthType() + "</td></tr>\n");
 	    out.println("<tr><td>Is a Manager</td>\n<td>" + request.isUserInRole("manager") + "</td></tr>\n");
 	    
+	    out.println("</table>\n");
+	    
+	    // Metodo getRequest URI
+	    String newLocation = NEW_HOST + request.getRequestURI();
+	    response.setHeader("Refresh", "10; URL=" + newLocation);
+	    
+	    out.println("The requested URI has been moved to a different host.<BR>");
+	    out.println("Its new location is " + newLocation + "<BR");
+	    out.println("Your browser will take you ther in 10 seconds.");
 	    
 	    out.println("</table>\n</body>\n</html>");
 	    }
