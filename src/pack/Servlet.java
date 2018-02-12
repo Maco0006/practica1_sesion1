@@ -81,6 +81,9 @@ public class Servlet extends HttpServlet {
 	    		+ "<th>Name</th><th>Value</th>\n" + "</tr>\n");
 	    
 	    // Metodo getAuthType
+	    //Devuelve el nombre del esquema de autenticacion utilizado para proteger el servlet. Todos los contenedores Servlet 
+	    //admiten autenticacion basica, de formulario y de certificado de cliente, y tambien pueden admitir la autenticacion
+	    //resumida. Si el servlet no esta autenticado, se devuelve null.
 	    out.println("<tr><td>User name</td>\n<td>" + request.getRemoteUser() + "</td></tr>\n");
 	    String name = (request.getUserPrincipal() == null) ? null : request.getUserPrincipal().getName();
 	    out.println("<tr><td>Principal name</td>\n<td>" + name + "</td></tr>\n");
@@ -89,13 +92,17 @@ public class Servlet extends HttpServlet {
 	    
 	    out.println("</table>\n");
 	    
+	    
+	    out.println("<h1 align=\"center\"> Method getRequestURI </h1>\n");
 	    // Metodo getRequest URI
+	    //Genera una nueva localizacion del URI solicitado, que permite redireccionar cualquier peticion hecha a otro servidor
+	    //a la misma dirección en el nuevo servidor.
 	    String newLocation = NEW_HOST + request.getRequestURI();
 	    response.setHeader("Refresh", "10; URL=" + newLocation);
 	    
 	    out.println("The requested URI has been moved to a different host.<BR>");
-	    out.println("Its new location is " + newLocation + "<BR");
-	    out.println("Your browser will take you ther in 10 seconds.");
+	    out.println("Its new location is " + newLocation + "<BR>");
+	    out.println("Your browser will take you there in 10 seconds.");
 	    
 	    out.println("</table>\n</body>\n</html>");
 	    }
