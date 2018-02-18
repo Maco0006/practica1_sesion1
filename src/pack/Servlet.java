@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 
 //Para solucionar el problema de la libreria JRE (al importar el proyecto desde github, no aparece):
@@ -31,20 +32,23 @@ public class Servlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 	
-	static final String NEW_HOST = "http://www.ujaen.es";
+	static final String NEW_HOST = ""; // Para cambiar el dominio y subdominio
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		response.setContentType("text/html"); // MUY IMPORTANTE EL TIPO PARA QUE NOS COJA LAS ETIQUETAS QUE USEMOS
 	    PrintWriter out = response.getWriter();
-	    
 	    String title = "HTTP Header Request Example";
 	    out.println("<html>\n" + "<head><title>" + title + "</title></head>\n"
-	    		+ "<body>\n<h1 align=\"center\"> Method GetHeaderNames </h1>\n"
+	    		+ "<body>\n");
+	    
+	    // Metodo getHeaderNames
+	    out.println("<h1 align=\"center\"> Method GetHeaderNames </h1>\n"
 	    		+ "<table width=\"100%\" border=\"1\" align=\"center\">\n"
 	    		+ "<tr>\n"
 	    		+ "<th>Header Name</th><th>Header Value</th>\n" + "</tr>\n");
 	    
-	    // Metodo getHeaderNames
+	    
 	    // Objeto names guarda la lista de cabeceras
 	    Enumeration<String> names = request.getHeaderNames();
 	    while (names.hasMoreElements()) {
@@ -60,13 +64,14 @@ public class Servlet extends HttpServlet {
 	    			}
 	    		}
 	    	}
+	    
+	    // Metodo getHeader
 	    out.println("</table>\n");
 	    out.println("<h1 align=\"center\"> Method GetHeader </h1>\n"
 	    		+ "<table width=\"100%\" border=\"1\" align=\"center\">\n"
 	    		+ "<tr>\n"
 	    		+ "<th>Header Name</th><th>Header Value</th>\n" + "</tr>\n");   
 	    	    
-	    // Metodo getHeader
 	    // Seleccionamos una cabecera y guardamos su valor en la variable
 	    String acceptLanguage = request.getHeader("accept-language");
 	    String acceptCharset = request.getHeader("accept-charset");
@@ -80,10 +85,12 @@ public class Servlet extends HttpServlet {
 	    		+ "<tr>\n"
 	    		+ "<th>Name</th><th>Value</th>\n" + "</tr>\n");
 	    
-	    // Metodo getAuthType
-	    //Devuelve el nombre del esquema de autenticacion utilizado para proteger el servlet. Todos los contenedores Servlet 
-	    //admiten autenticacion basica, de formulario y de certificado de cliente, y tambien pueden admitir la autenticacion
-	    //resumida. Si el servlet no esta autenticado, se devuelve null.
+	    /* 
+	    	Metodo getAuthType
+	    	Devuelve el nombre del esquema de autenticacion utilizado para proteger el servlet. Todos los contenedores Servlet 
+	    	admiten autenticacion basica, de formulario y de certificado de cliente, y tambien pueden admitir la autenticacion
+	    	resumida. Si el servlet no esta autenticado, se devuelve null.
+	    */
 	    out.println("<tr><td>User name</td>\n<td>" + request.getRemoteUser() + "</td></tr>\n");
 	    String name = (request.getUserPrincipal() == null) ? null : request.getUserPrincipal().getName();
 	    out.println("<tr><td>Principal name</td>\n<td>" + name + "</td></tr>\n");
@@ -93,10 +100,12 @@ public class Servlet extends HttpServlet {
 	    out.println("</table>\n");
 	    
 	    
-	    out.println("<h1 align=\"center\"> Method getRequestURI </h1>\n");
 	    // Metodo getRequest URI
+	    out.println("<h1 align=\"center\"> Method getRequestURI </h1>\n");
+	    
 	    //Genera una nueva localizacion del URI solicitado, que permite redireccionar cualquier peticion hecha a otro servidor
 	    //a la misma dirección en el nuevo servidor.
+	    
 	    String newLocation = NEW_HOST + request.getRequestURI();
 	    response.setHeader("Refresh", "10; URL=" + newLocation);
 	    
@@ -104,6 +113,13 @@ public class Servlet extends HttpServlet {
 	    out.println("Its new location is " + newLocation + "<BR>");
 	    out.println("Your browser will take you there in 10 seconds.");
 	    
-	    out.println("</table>\n</body>\n</html>");
+	    out.println("</table>");
+	    out.println("<br><br>");
+	    out.println("<a href=\"/practica1_sesion1/index.html\">Volver</a>");
+	    out.println("</body>\n</html>");
 	    }
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+			doGet(request,response); // Llama al metodo doGet
+		}
+	
 	}
