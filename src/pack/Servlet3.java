@@ -39,9 +39,16 @@ public class Servlet3 extends HttpServlet {
 		// Añadimos la Cookie a la respuesta
 		response.addCookie(c);
 		
+		//Para eliminar la cookie:
+				c.setMaxAge(0);
+				c.setPath("/");
+				response.addCookie(c);
+		
 		// Redireccionamos a index.html
 		response.sendRedirect(url);
 
+		
+		
 	}
 
 }
